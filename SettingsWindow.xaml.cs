@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using WPFtest.ViewModels;
 
 namespace WPFtest
 {
@@ -11,16 +12,10 @@ namespace WPFtest
         public SettingsWindow()
         {
             InitializeComponent();
+            this.DataContext = new SettingsWindowViewModel();
+
             CB_Theme.IsChecked = Properties.Settings.Default.DarkTheme;
             CB_UnitInSeconds.IsChecked = Properties.Settings.Default.UnitInSeconds;
-            if(!Properties.Settings.Default.DarkTheme)
-            {
-                Windoww.Background = Brushes.White;
-                CB_Theme.Foreground = Brushes.Black;
-                CB_UnitInSeconds.Foreground = Brushes.Black;
-                Bt_Save.Background = Brushes.White;
-                Bt_Save.Foreground = Brushes.Black;
-            }
         }
 
         private void Bt_Save_Click(object sender, RoutedEventArgs e)

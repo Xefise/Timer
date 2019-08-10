@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Media;
-
+using System.Windows.Data;
+using WPFtest.ViewModels;
+//<Setter Property="Background" Value="#FF323232"/>
+//            <Setter Property = "Foreground" Value="White"/>
 
 namespace WPFtest
 {
@@ -14,41 +16,18 @@ namespace WPFtest
         uint LastEnteredNumber;
         uint PausedTime;
         bool IsStopped;
+        bool UnitInSeconds = true;
         MediaPlayer player = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-            if(!Properties.Settings.Default.DarkTheme)
-            {
-                Windoww.Background = Brushes.White;
-                TBlock_TimeLeft.Foreground = Brushes.Black;
-                TBlock_EnterTime.Foreground = Brushes.Black;
-                TBox_Time.Background = Brushes.LightGray;
-                TBox_Time.Foreground = Brushes.Black;
-                Bt_Start.Background = Brushes.White;
-                Bt_Start.Foreground = Brushes.Black;
-                Bt_Pause.BorderBrush = Brushes.Gray;
-                Bt_Pause.Background = Brushes.White;
-                Bt_Pause.Foreground = Brushes.Black;
-                Bt_Pause.BorderBrush = Brushes.Gray;
-                Bt_Restart.Background = Brushes.White;
-                Bt_Restart.Foreground = Brushes.Black;
-                Bt_Restart.BorderBrush = Brushes.Gray;
-                Bt_Stop.Background = Brushes.White;
-                Bt_Stop.Foreground = Brushes.Black;
-                Bt_Stop.BorderBrush = Brushes.Gray;
-                Bt_Resume.Background = Brushes.White;
-                Bt_Resume.Foreground = Brushes.Black;
-                Bt_Resume.BorderBrush = Brushes.Gray;
-                Bt_Settings.Background = Brushes.White;
-                Bt_Settings.Foreground = Brushes.Black;
-                Bt_Settings.BorderBrush = Brushes.Gray;
-            }
+            this.DataContext = new MainWindowViewModel();
 
             if(!Properties.Settings.Default.UnitInSeconds)
             {
                 TBlock_EnterTime.Text = "Time in mins:";
+                UnitInSeconds = false;
             }
         }
 
@@ -59,12 +38,12 @@ namespace WPFtest
             try
             {
                 LastEnteredNumber = Convert.ToUInt32(TBox_Time.Text);
+                if (!UnitInSeconds) LastEnteredNumber *= 60;
                 Time = LastEnteredNumber;
                 await Task.Run(() => WTimer());
             }
             catch (Exception)
             {
-                TBlock_TimeLeft.Foreground = Brushes.Red;
                 TBlock_TimeLeft.Text = "Enter positive number!";
                 ButtonsSwitch(false);
             }
@@ -110,7 +89,6 @@ namespace WPFtest
 
         private void WTimer()
         {
-            Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Foreground = Brushes.White));
             long STime; int h; int m; int s;
             while (Time != 0)
             {
@@ -123,7 +101,6 @@ namespace WPFtest
                 Thread.Sleep(1000);
             }
 
-            Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Foreground = Brushes.Orange));
             if (IsStopped == false)
             {
                 try

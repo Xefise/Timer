@@ -5,17 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFtest"
         mc:Ignorable="d"
-        Title="Timer" Height="350" Width="400" ResizeMode="CanMinimize" Background="#FF232323" Icon="Resources/Icon.ico">
+        Title="Timer" Height="350" Width="400" ResizeMode="CanMinimize" Background="{Binding Path=Background}" Icon="Resources/Icon.ico">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{Binding Path=Bt_Background}"/>
+            <Setter Property="Foreground" Value="{Binding Path=Bt_Foreground}"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{Binding Path=Bt_Foreground}"/>
+        </Style>
+    </Window.Resources>
     <Grid x:Name="grid1">
-        <TextBlock x:Name="TBlock_TimeLeft" TextWrapping="Wrap" Foreground="White" Margin="50,45,50,225" Text="Time left:" FontSize="24" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="TBlock_EnterTime"  Margin="100,140,190,145" TextWrapping="Wrap" Text="Time in secs:" Foreground="White" FontSize="15"/>
-        <TextBox x:Name="TBox_Time" Margin="200,140,130,147" Background="#FF323232" Foreground="White" FontSize="16"/>
-        <Button x:Name="Bt_Start" Content="Start" Margin="60,235,234,45" Background="#FF323232" Foreground="White" Click="Bt_Start_Click"/>
-        <Button x:Name="Bt_Pause" Content="Pause" Margin="234,235,60,45" Background="#FF323232" Foreground="White" Click="Bt_Pause_Click" IsEnabled="False" Visibility="Hidden"/>
-        <Button x:Name="Bt_Restart" Content="Restart" Margin="234,235,60,45" Background="#FF323232" Foreground="White" Click="Bt_Restart_Click"/>
-        <Button x:Name="Bt_Stop" Content="Stop" Margin="60,235,234,45" Background="#FF323232" Foreground="White" Click="Bt_Stop_Click" IsEnabled="False" Visibility="Hidden"/>
-        <Button x:Name="Bt_Resume" Content="Resume" Margin="234,235,60,45" Background="#FF323232" Foreground="White" Click="Bt_Resume_Click" IsEnabled="False" Visibility="Hidden"/>
-        <Button x:Name="Bt_Settings" Margin="338,10,10,265" Background="#FF323232" FontSize="10" Click="Bt_Settings_Click">
+        <TextBlock x:Name="TBlock_TimeLeft" TextWrapping="Wrap" Margin="50,45,50,225" Text="Time left:" FontSize="24" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="TBlock_EnterTime"  Margin="100,140,190,145" TextWrapping="Wrap" Text="Time in secs:" FontSize="15"/>
+        <TextBox x:Name="TBox_Time" Background="{Binding Path=Background}" Foreground="{Binding Path=Bt_Foreground}" Margin="200,140,130,147" FontSize="16"/>
+        <Button x:Name="Bt_Start" Content="Start" Margin="60,235,234,45" Click="Bt_Start_Click"/>
+        <Button x:Name="Bt_Pause" Content="Pause" Margin="234,235,60,45" Click="Bt_Pause_Click" IsEnabled="False" Visibility="Hidden"/>
+        <Button x:Name="Bt_Restart" Content="Restart" Margin="234,235,60,45" Click="Bt_Restart_Click"/>
+        <Button x:Name="Bt_Stop" Content="Stop" Margin="60,235,234,45" Click="Bt_Stop_Click" IsEnabled="False" Visibility="Hidden"/>
+        <Button x:Name="Bt_Resume" Content="Resume" Margin="234,235,60,45" Click="Bt_Resume_Click" IsEnabled="False" Visibility="Hidden"/>
+        <Button x:Name="Bt_Settings" Margin="338,10,10,265" FontSize="10" Click="Bt_Settings_Click">
             <Image Source="Resources/Settings.jpg"/>
         </Button>
     </Grid>
