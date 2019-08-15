@@ -3,10 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Data;
-using WPFtest.ViewModels;
-//<Setter Property="Background" Value="#FF323232"/>
-//            <Setter Property = "Foreground" Value="White"/>
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace WPFtest
 {
@@ -22,13 +20,30 @@ namespace WPFtest
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
 
             if(!Properties.Settings.Default.UnitInSeconds)
             {
                 TBlock_EnterTime.Text = "Time in mins:";
                 UnitInSeconds = false;
             }
+
+            List<string> styles = new List<string> { "light", "dark" };
+            styleBox.SelectionChanged += ThemeChange;
+            styleBox.ItemsSource = styles;
+            styleBox.SelectedItem = "light";
+        }
+
+        private void ThemeChange(object sender, SelectionChangedEventArgs e)
+        {
+            string style = styleBox.SelectedItem as string;
+            // определяем путь к файлу ресурсов
+            var uri = new Uri(style + ".xaml", UriKind.Relative);
+            // загружаем словарь ресурсов
+            ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+            // очищаем коллекцию ресурсов приложения
+            Application.Current.Resources.Clear();
+            // добавляем загруженный словарь ресурсов
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
 
         private async void Bt_Start_Click(object sender, RoutedEventArgs e)
@@ -79,12 +94,6 @@ namespace WPFtest
             PauseSwitch(false);
             Time = PausedTime;
             await Task.Run(() => WTimer());
-        }
-
-        private void Bt_Settings_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
         }
 
         private void WTimer()
