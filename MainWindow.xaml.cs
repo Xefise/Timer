@@ -3,11 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Data;
-using WPFtest.ViewModels;
-//<Setter Property="Background" Value="#FF323232"/>
-//            <Setter Property = "Foreground" Value="White"/>
-
 namespace WPFtest
 {
     public partial class MainWindow : Window
@@ -16,19 +11,24 @@ namespace WPFtest
         uint LastEnteredNumber;
         uint PausedTime;
         bool IsStopped;
-        bool UnitInSeconds = true;
+        public static bool UnitInSeconds = true;
+        public static string Theme = "Dark";
         MediaPlayer player = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            UpdateTheme();
 
-            if(!Properties.Settings.Default.UnitInSeconds)
-            {
-                TBlock_EnterTime.Text = "Time in mins:";
-                UnitInSeconds = false;
-            }
+            if (!Properties.Settings.Default.UnitInSeconds) UnitInSeconds = false; else  UnitInSeconds = true;
+        }
+
+        public static void UpdateTheme()
+        {
+            if (!Properties.Settings.Default.DarkTheme) Theme = "Light"; else Theme = "Dark";
+            ResourceDictionary resourceDict = Application.LoadComponent(new Uri($"{Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
 
         private async void Bt_Start_Click(object sender, RoutedEventArgs e)

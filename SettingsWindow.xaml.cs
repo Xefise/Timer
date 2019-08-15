@@ -1,18 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
-using WPFtest.ViewModels;
 
 namespace WPFtest
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
     public partial class SettingsWindow : Window
     {
         public SettingsWindow()
         {
             InitializeComponent();
-            this.DataContext = new SettingsWindowViewModel();
 
             CB_Theme.IsChecked = Properties.Settings.Default.DarkTheme;
             CB_UnitInSeconds.IsChecked = Properties.Settings.Default.UnitInSeconds;
@@ -22,9 +18,15 @@ namespace WPFtest
         {
             Properties.Settings.Default.DarkTheme = CB_Theme.IsChecked ?? false;
             Properties.Settings.Default.UnitInSeconds = CB_UnitInSeconds.IsChecked ?? false;
-
             Properties.Settings.Default.Save();
-            MessageBox.Show("Restart the program to apply the settings.");
+
+            if (!CB_Theme.IsChecked ?? false) MainWindow.Theme = "Light"; else MainWindow.Theme = "Dark";
+            ResourceDictionary resourceDict = Application.LoadComponent(new Uri($"{MainWindow.Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+
+            MainWindow.UpdateTheme();
+            MainWindow.UnitInSeconds = CB_UnitInSeconds.IsChecked ?? false;
         }
     }
 }
