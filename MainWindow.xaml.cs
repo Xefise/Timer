@@ -3,10 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace WPFtest
 {
     public partial class MainWindow : Window
     {
+        private NotifyIcon _notifyIcon;
         uint Time;
         uint LastEnteredNumber;
         uint PausedTime;
@@ -26,9 +30,9 @@ namespace WPFtest
         public static void UpdateTheme()
         {
             if (!Properties.Settings.Default.DarkTheme) Theme = "Light"; else Theme = "Dark";
-            ResourceDictionary resourceDict = Application.LoadComponent(new Uri($"{Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
-            Application.Current.Resources.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            ResourceDictionary resourceDict = System.Windows.Application.LoadComponent(new Uri($"{Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
+            System.Windows.Application.Current.Resources.Clear();
+            System.Windows.Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
 
         private async void Bt_Start_Click(object sender, RoutedEventArgs e)
@@ -111,10 +115,18 @@ namespace WPFtest
                         player.Volume = 1d;
                         player.Play();
                     }));
+                    _notifyIcon = new NotifyIcon
+                    {
+                        BalloonTipText = @"Time is passed!",
+                        Text = @"Timer",
+                        Icon = new Icon("Resources//Icon.ico"),
+                        Visible = true
+                    };
+                    _notifyIcon.ShowBalloonTip(1000);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    MessageBox.Show("Error: Bell.mp3 not found!");
+                    System.Windows.MessageBox.Show("Error: Bell.mp3 not found!\n " + e);
                 }
                 finally
                 {
