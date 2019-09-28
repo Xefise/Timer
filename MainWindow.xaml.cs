@@ -93,15 +93,18 @@ namespace WPFtest
 
         private void WTimer()
         {
-            long STime; int h; int m; int s;
+            long STime; byte h; byte m; byte s; int hh; byte mm; byte ss;
             while (Time != 0)
             {
                 Time -= 1;
                 STime = Time;
-                h = (int)(STime / 3600); STime -= 3600 * h;
-                m = (int)(STime / 60); STime -= 60 * m;
-                s = (int)(STime);
-                Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time Left: {h} : {m} : {s}"));
+                hh = (byte)(STime / 36000); STime -= 36000 * hh;
+                h = (byte)(STime / 3600); STime -= 3600 * h;
+                mm = (byte)(STime / 600); STime -= 600 * mm;
+                m = (byte)(STime / 60); STime -= 60 * m;
+                ss = (byte)(STime / 10); STime -= 10 * ss;
+                s = (byte)(STime);
+                Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time Left: {hh}{h} : {mm}{m} : {ss}{s}"));
                 Thread.Sleep(1000);
             }
 
