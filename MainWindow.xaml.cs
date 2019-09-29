@@ -57,7 +57,7 @@ namespace WPFtest
         {
             IsStopped = true;
             Time = 0;
-            Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time Left: 0 : 0 : 0"));
+            Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: 00 : 00 : 00"));
             ButtonsSwitch(false);
         }
 
@@ -104,7 +104,7 @@ namespace WPFtest
                 m = (byte)(STime / 60); STime -= 60 * m;
                 ss = (byte)(STime / 10); STime -= 10 * ss;
                 s = (byte)(STime);
-                Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time Left: {hh}{h} : {mm}{m} : {ss}{s}"));
+                Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: {hh}{h} : {mm}{m} : {ss}{s}"));
                 Thread.Sleep(1000);
             }
 

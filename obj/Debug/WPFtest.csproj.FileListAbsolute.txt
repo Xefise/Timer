@@ -18,3 +18,4 @@ D:\Csharp\WPFtest\WPFtest\obj\Debug\SettingsWindow.baml
 D:\Csharp\WPFtest\WPFtest\obj\Debug\Dark.baml
 D:\Csharp\WPFtest\WPFtest\obj\Debug\Light.baml
 D:\Csharp\WPFtest\WPFtest\obj\Debug\WPFtest.csprojAssemblyReference.cache
+D:\Csharp\WPFtest\WPFtest\obj\Debug\App.baml

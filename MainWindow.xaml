@@ -8,7 +8,7 @@
         Title="Timer" Height="350" Width="400" ResizeMode="CanMinimize" Icon="Resources/Icon.ico" Style="{DynamicResource WindowStyle}">
 
     <Grid x:Name="grid1">
-        <TextBlock x:Name="TBlock_TimeLeft" TextWrapping="Wrap" Margin="50,45,50,225" Text="Time left:" FontSize="24" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="TBlock_TimeLeft" TextWrapping="Wrap" Margin="50,45,50,225" Text="Time left: 00 : 00 : 00" FontSize="24" HorizontalAlignment="Center"/>
         <TextBlock x:Name="TBlock_EnterTime"  Margin="135,140,200,145" TextWrapping="Wrap" Text="Time:" FontSize="15"/>
         <TextBox x:Name="TBox_Time" Margin="195,140,140,147" FontSize="16"/>
         <Button x:Name="Bt_Start" Content="Start" Margin="60,235,234,45" Click="Bt_Start_Click"/>
