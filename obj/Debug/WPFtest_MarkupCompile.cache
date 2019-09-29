@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Csharp\WPFtest\WPFtest\App.xaml
-4-588813619
+41191743189
 12016748946
 61649743925
 151397803362
-Dark.xaml;Light.xaml;MainWindow.xaml;SettingsWindow.xaml;
+Themes\Dark.xaml;Themes\Light.xaml;MainWindow.xaml;SettingsWindow.xaml;
 
 False
 

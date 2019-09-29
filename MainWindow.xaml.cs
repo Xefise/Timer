@@ -29,7 +29,7 @@ namespace WPFtest
 
         public static void UpdateTheme()
         {
-            if (!Properties.Settings.Default.DarkTheme) Theme = "Light"; else Theme = "Dark";
+            if (!Properties.Settings.Default.DarkTheme) Theme = "Themes/Light"; else Theme = "Themes/Dark";
             ResourceDictionary resourceDict = System.Windows.Application.LoadComponent(new Uri($"{Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
             System.Windows.Application.Current.Resources.Clear();
             System.Windows.Application.Current.Resources.MergedDictionaries.Add(resourceDict);

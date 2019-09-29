@@ -20,7 +20,7 @@ namespace WPFtest
             Properties.Settings.Default.UnitInSeconds = CB_UnitInSeconds.IsChecked ?? false;
             Properties.Settings.Default.Save();
 
-            if (!CB_Theme.IsChecked ?? false) MainWindow.Theme = "Light"; else MainWindow.Theme = "Dark";
+            if (!CB_Theme.IsChecked ?? false) MainWindow.Theme = "Themes/Light"; else MainWindow.Theme = "Themes/Dark";
             ResourceDictionary resourceDict = Application.LoadComponent(new Uri($"{MainWindow.Theme}.xaml", UriKind.Relative)) as ResourceDictionary;
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(resourceDict);

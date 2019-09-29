@@ -15,7 +15,7 @@ D:\Csharp\WPFtest\WPFtest\obj\Debug\WPFtest_Content.g.cs
 D:\Csharp\WPFtest\WPFtest\bin\Debug\Resources\Bell.mp3
 D:\Csharp\WPFtest\WPFtest\obj\Debug\SettingsWindow.g.cs
 D:\Csharp\WPFtest\WPFtest\obj\Debug\SettingsWindow.baml
-D:\Csharp\WPFtest\WPFtest\obj\Debug\Dark.baml
-D:\Csharp\WPFtest\WPFtest\obj\Debug\Light.baml
 D:\Csharp\WPFtest\WPFtest\obj\Debug\WPFtest.csprojAssemblyReference.cache
 D:\Csharp\WPFtest\WPFtest\obj\Debug\App.baml
+D:\Csharp\WPFtest\WPFtest\obj\Debug\Themes\Dark.baml
+D:\Csharp\WPFtest\WPFtest\obj\Debug\Themes\Light.baml

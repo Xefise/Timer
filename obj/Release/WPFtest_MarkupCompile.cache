@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Csharp\WPFtest\WPFtest\obj\Debug\
+D:\Csharp\WPFtest\WPFtest\obj\Release\
 WPFtest
 none
 false
-DEBUG;TRACE
+TRACE
 D:\Csharp\WPFtest\WPFtest\App.xaml
 41191743189
 12016748946
-71680156225
+61649743925
 151397803362
 Themes\Dark.xaml;Themes\Light.xaml;MainWindow.xaml;SettingsWindow.xaml;
 
-True
+False
 
