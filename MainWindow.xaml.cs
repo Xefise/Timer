@@ -12,19 +12,18 @@ namespace WPFtest
     {
         private NotifyIcon _notifyIcon;
         uint Time;
-        uint LastEnteredNumber;
-        uint PausedTime;
-        bool IsStopped;
-        public static bool UnitInSeconds = true;
-        public static string Theme = "Dark";
-        MediaPlayer player = new MediaPlayer();
+        uint PausedTime; // This is time when timer stopped
+        bool IsWorking = false; // The timer is working now?
+        public static bool UnitInSeconds;
+        public static string Theme;
+        MediaPlayer player = new MediaPlayer(); // For the alarm
 
         public MainWindow()
         {
             InitializeComponent();
             UpdateTheme();
 
-            if (!Properties.Settings.Default.UnitInSeconds) UnitInSeconds = false; else  UnitInSeconds = true;
+            if (Properties.Settings.Default.UnitInSeconds) UnitInSeconds = true; else UnitInSeconds = false;
         }
 
         public static void UpdateTheme()
@@ -37,13 +36,16 @@ namespace WPFtest
 
         private async void Bt_Start_Click(object sender, RoutedEventArgs e)
         {
-            IsStopped = false;
-            ButtonsSwitch(true);
+            FreezeButtons();
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                ButtonsSwitch(true);
+            });
             try
             {
-                LastEnteredNumber = Convert.ToUInt32(TBox_Time.Text);
-                if (!UnitInSeconds) LastEnteredNumber *= 60;
-                Time = LastEnteredNumber;
+                Time = Convert.ToUInt32(TBox_Time.Text);
+                if (!UnitInSeconds) Time *= 60;
                 await Task.Run(() => WTimer());
             }
             catch (Exception)
@@ -55,32 +57,31 @@ namespace WPFtest
 
         private void Bt_Stop_Click(object sender, RoutedEventArgs e)
         {
-            IsStopped = true;
+            IsWorking = false;
             Time = 0;
             Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: 00 : 00 : 00"));
+            Thread.Sleep(250);
             ButtonsSwitch(false);
         }
 
         private void Bt_Pause_Click(object sender, RoutedEventArgs e)
         {
             PausedTime = Time;
-            IsStopped = true;
+            IsWorking = false;
             Time = 0;
+            Thread.Sleep(250);
             PauseSwitch(true);
-        }
-
-        private async void Bt_Restart_Click(object sender, RoutedEventArgs e)
-        {
-            ButtonsSwitch(true);
-            IsStopped = false;
-            Time = LastEnteredNumber;
-            await Task.Run(() => WTimer());
         }
 
         private async void Bt_Resume_Click(object sender, RoutedEventArgs e)
         {
-            IsStopped = false;
-            PauseSwitch(false);
+            FreezeButtons();
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                PauseSwitch(false);
+            });
+            IsWorking = true;
             Time = PausedTime;
             await Task.Run(() => WTimer());
         }
@@ -93,6 +94,7 @@ namespace WPFtest
 
         private void WTimer()
         {
+            IsWorking = true;
             long STime; byte h; byte m; byte s; int hh; byte mm; byte ss;
             while (Time != 0)
             {
@@ -108,7 +110,7 @@ namespace WPFtest
                 Thread.Sleep(1000);
             }
 
-            if (IsStopped == false)
+            if (IsWorking)
             {
                 try
                 {
@@ -136,7 +138,7 @@ namespace WPFtest
                     ButtonsSwitch(false);
                 }
             }
-            IsStopped = false;
+            IsWorking = false;
         }
         
         /// <param name="TimerIsWorking">Is the timer working?</param>
@@ -150,8 +152,6 @@ namespace WPFtest
                     Bt_Start.Visibility = Visibility.Hidden;
                     Bt_Pause.IsEnabled = true;
                     Bt_Pause.Visibility = Visibility.Visible;
-                    Bt_Restart.IsEnabled = false;
-                    Bt_Restart.Visibility = Visibility.Hidden;
                     Bt_Stop.IsEnabled = true;
                     Bt_Stop.Visibility = Visibility.Visible;
                     Bt_Resume.IsEnabled = false;
@@ -166,14 +166,28 @@ namespace WPFtest
                     Bt_Start.Visibility = Visibility.Visible;
                     Bt_Pause.IsEnabled = false;
                     Bt_Pause.Visibility = Visibility.Hidden;
-                    Bt_Restart.IsEnabled = true;
-                    Bt_Restart.Visibility = Visibility.Visible;
                     Bt_Stop.IsEnabled = false;
                     Bt_Stop.Visibility = Visibility.Hidden;
                     Bt_Resume.IsEnabled = false;
                     Bt_Resume.Visibility = Visibility.Hidden;
                 }));
             }
+        }
+
+        /// <param>Turn off all buttons</param>
+        private void FreezeButtons()
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                Bt_Start.IsEnabled = false;
+                Bt_Start.Visibility = Visibility.Hidden;
+                Bt_Pause.IsEnabled = false;
+                Bt_Pause.Visibility = Visibility.Hidden;
+                Bt_Stop.IsEnabled = false;
+                Bt_Stop.Visibility = Visibility.Hidden;
+                Bt_Resume.IsEnabled = false;
+                Bt_Resume.Visibility = Visibility.Hidden;
+            }));
         }
 
         /// <param name="IsEnabled">Is the pause enabled?</param>
@@ -187,8 +201,6 @@ namespace WPFtest
                     Bt_Start.Visibility = Visibility.Hidden;
                     Bt_Pause.IsEnabled = false;
                     Bt_Pause.Visibility = Visibility.Hidden;
-                    Bt_Restart.IsEnabled = false;
-                    Bt_Restart.Visibility = Visibility.Hidden;
                     Bt_Stop.IsEnabled = true;
                     Bt_Stop.Visibility = Visibility.Visible;
                     Bt_Resume.IsEnabled = true;
@@ -203,8 +215,6 @@ namespace WPFtest
                     Bt_Start.Visibility = Visibility.Hidden;
                     Bt_Pause.IsEnabled = true;
                     Bt_Pause.Visibility = Visibility.Visible;
-                    Bt_Restart.IsEnabled = false;
-                    Bt_Restart.Visibility = Visibility.Hidden;
                     Bt_Stop.IsEnabled = true;
                     Bt_Stop.Visibility = Visibility.Visible;
                     Bt_Resume.IsEnabled = false;
