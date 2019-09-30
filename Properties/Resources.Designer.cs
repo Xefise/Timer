@@ -59,15 +59,5 @@ namespace WPFtest.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] Bell {
-            get {
-                object obj = ResourceManager.GetObject("Bell", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

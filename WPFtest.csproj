@@ -115,9 +115,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Bell.mp3" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\Bell.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
