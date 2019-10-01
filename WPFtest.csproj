@@ -118,7 +118,7 @@
     <Content Include="Resources\Bell.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Settings.jpg" />
+    <Resource Include="Resources\Settings.png" />
     <Resource Include="Resources\Icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

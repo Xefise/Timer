@@ -16,7 +16,7 @@
         <Button x:Name="Bt_Stop" Content="Stop" Margin="60,235,234,45" Click="Bt_Stop_Click" IsEnabled="False" Visibility="Hidden" Template="{DynamicResource Buttons}"/>
         <Button x:Name="Bt_Resume" Content="Resume" Margin="234,235,60,45" Click="Bt_Resume_Click" IsEnabled="False" Visibility="Hidden" Template="{DynamicResource Buttons}"/>
         <Button x:Name="Bt_Settings" Margin="338,10,10,265" FontSize="10" Click="Bt_Settings_Click" Template="{DynamicResource Buttons}">
-            <Image Source="Resources/Settings.jpg"/>
+            <Image Source="Resources/Settings.png"/>
         </Button>
     </Grid>
 </Window>
