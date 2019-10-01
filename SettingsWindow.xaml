@@ -10,6 +10,6 @@
     <Grid>
         <CheckBox x:Name="CB_Theme" Content="Dark theme" Margin="30,30,145,110" FontSize="16"/>
         <CheckBox x:Name="CB_UnitInSeconds" Content="Enter time in seconds" Margin="30,70,80,70" FontSize="16"/>
-        <Button x:Name="Bt_Save" Content="Save" Margin="98,110,98,20" Click="Bt_Save_Click"/>
+        <Button x:Name="Bt_Save" Content="Save" Margin="98,110,98,20" Click="Bt_Save_Click" Template="{DynamicResource Buttons}"/>
     </Grid>
 </Window>
