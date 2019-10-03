@@ -11,11 +11,16 @@ namespace WPFtest
     public partial class MainWindow : Window
     {
         private NotifyIcon _notifyIcon;
-        uint Time;
-        uint PausedTime; // This is time when timer stopped
+        ulong Time;
+        ulong PausedTime; // This is time when timer stopped
         bool IsWorking = false; // The timer is working now?
         public static bool UnitInSeconds;
         public static string Theme;
+
+        // For accuracy
+        DateTime TimePassedAt = new DateTime();
+        TimeSpan Span = new TimeSpan();
+
         MediaPlayer player = new MediaPlayer(); // For the alarm
 
         public MainWindow()
@@ -39,7 +44,7 @@ namespace WPFtest
             FreezeButtons();
             await Task.Run(() =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(255);
                 ButtonsSwitch(true);
             });
             try
@@ -60,7 +65,7 @@ namespace WPFtest
             IsWorking = false;
             Time = 0;
             Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: 00 : 00 : 00"));
-            Thread.Sleep(250);
+            Thread.Sleep(255);
             ButtonsSwitch(false);
         }
 
@@ -69,7 +74,7 @@ namespace WPFtest
             PausedTime = Time;
             IsWorking = false;
             Time = 0;
-            Thread.Sleep(250);
+            Thread.Sleep(255);
             PauseSwitch(true);
         }
 
@@ -78,7 +83,7 @@ namespace WPFtest
             FreezeButtons();
             await Task.Run(() =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(255);
                 PauseSwitch(false);
             });
             IsWorking = true;
@@ -94,20 +99,35 @@ namespace WPFtest
 
         private void WTimer()
         {
+            TimePassedAt = DateTime.Now.AddSeconds(Convert.ToDouble(Time));
             IsWorking = true;
-            long STime; byte h; byte m; byte s; int hh; byte mm; byte ss;
+            ulong Working = 0;
+            ulong STime; byte h; byte m; byte s; int hh; byte mm; byte ss;
             while (Time != 0)
             {
                 Time -= 1;
+                ++Working;
                 STime = Time;
-                hh = (byte)(STime / 36000); STime -= 36000 * hh;
-                h = (byte)(STime / 3600); STime -= 3600 * h;
-                mm = (byte)(STime / 600); STime -= 600 * mm;
-                m = (byte)(STime / 60); STime -= 60 * m;
-                ss = (byte)(STime / 10); STime -= 10 * ss;
+                hh = (byte)(STime / 36000); STime -= Convert.ToUInt64(36000 * hh);
+                h = (byte)(STime / 3600); STime -= Convert.ToUInt64(3600 * h);
+                mm = (byte)(STime / 600); STime -= Convert.ToUInt64(600 * mm);
+                m = (byte)(STime / 60); STime -= Convert.ToUInt64(60 * m);
+                ss = (byte)(STime / 10); STime -= Convert.ToUInt64(10 * ss);
                 s = (byte)(STime);
                 Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: {hh}{h} : {mm}{m} : {ss}{s}"));
-                Thread.Sleep(1000);
+                Thread.Sleep(250);
+                if (!IsWorking) break;
+                Thread.Sleep(250);
+                if (!IsWorking) break;
+                Thread.Sleep(250);
+                if (!IsWorking) break;
+                Thread.Sleep(250); // Немного говнокода))
+                if (Working > 10)
+                {
+                    Working = 0;
+                    Span = TimePassedAt - DateTime.Now;
+                    Time = Convert.ToUInt64(Span.TotalSeconds);
+                }
             }
 
             if (IsWorking)
@@ -139,6 +159,7 @@ namespace WPFtest
                 }
             }
             IsWorking = false;
+            Dispatcher.Invoke(new Action(() => TBlock_TimeLeft.Text = $"Time left: 00 : 00 : 00"));
         }
         
         /// <param name="TimerIsWorking">Is the timer working?</param>
