@@ -122,7 +122,7 @@ namespace WPFtest
                 Thread.Sleep(250);
                 if (!IsWorking) break;
                 Thread.Sleep(250); // Немного говнокода))
-                if (Working > 10)
+                if (Working > 200)
                 {
                     Working = 0;
                     Span = TimePassedAt - DateTime.Now;
