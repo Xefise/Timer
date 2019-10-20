@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WPFtest
+namespace Timer
 {
     /// <summary>
     /// Interaction logic for App.xaml

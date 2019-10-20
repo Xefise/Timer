@@ -1,13 +1,12 @@
-﻿<Window x:Name="Windoww" x:Class="WPFtest.MainWindow"
+﻿<Window x:Name="MainW" x:Class="Timer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFtest"
         mc:Ignorable="d"
         Title="Timer" Height="350" Width="400" ResizeMode="CanMinimize" Icon="Resources/Icon.ico" Style="{DynamicResource WindowStyle}">
 
-    <Grid x:Name="grid1">
+    <Grid>
         <TextBlock x:Name="TBlock_TimeLeft" TextWrapping="Wrap" Margin="50,45,50,225" Text="Time left: 00 : 00 : 00" FontSize="24" HorizontalAlignment="Center"/>
         <TextBlock x:Name="TBlock_EnterTime"  Margin="135,140,200,145" TextWrapping="Wrap" Text="Time:" FontSize="15"/>
         <TextBox x:Name="TBox_Time" Margin="195,140,140,147" FontSize="16"/>

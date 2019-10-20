@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace WPFtest
+namespace Timer
 {
     public partial class SettingsWindow : Window
     {

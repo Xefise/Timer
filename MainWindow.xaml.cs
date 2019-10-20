@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WPFtest
+namespace Timer
 {
     public partial class MainWindow : Window
     {
