@@ -4,12 +4,25 @@ namespace Timer
 {
     public partial class SettingsWindow : Window
     {
+        static Window instance; // Singleton
+
         public SettingsWindow()
         {
-            InitializeComponent();
+            if (instance != null)
+            {
+                instance.Focus();
+            }
+            else
+            {
+                this.Closing += RemoveInstance;
 
-            CB_Theme.IsChecked = Properties.Settings.Default.DarkTheme;
-            CB_UnitInSeconds.IsChecked = Properties.Settings.Default.UnitInSeconds;
+                instance = this;
+                InitializeComponent();
+                this.Show();
+
+                CB_Theme.IsChecked = Properties.Settings.Default.DarkTheme;
+                CB_UnitInSeconds.IsChecked = Properties.Settings.Default.UnitInSeconds;
+            }
         }
 
         private void Bt_Save_Click(object sender, RoutedEventArgs e)
@@ -21,5 +34,7 @@ namespace Timer
             MainWindow.UpdateTheme();
             MainWindow.UnitInSeconds = CB_UnitInSeconds.IsChecked ?? false;
         }
+
+        void RemoveInstance(object sender, System.ComponentModel.CancelEventArgs e) => instance = null; 
     }
 }

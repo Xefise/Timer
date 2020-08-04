@@ -91,11 +91,7 @@ namespace Timer
             await Task.Run(() => WTimer());
         }
 
-        private void Bt_Settings_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
-        }
+        private void Bt_Settings_Click(object sender, RoutedEventArgs e) => _ = new SettingsWindow();
 
         private void WTimer()
         {
